@@ -3,11 +3,11 @@ import re
 
 from collections import UserDict
 from prettytable import PrettyTable
-
+from prompt_toolkit import prompt
 
 ########## COMMANDS ################
 
-COMMANDS = ['add note', 'delete note', 'get by tag', 'get by title', 'exit']
+COMMANDS = ['add note', 'delete note', 'get by tag', 'get by title', 'exit', 'edit note']
 
 
 
@@ -29,6 +29,12 @@ class NoteBook(UserDict):
         notes_list = self.data.values()
         notes = list(filter(lambda x: x.tag == tag, notes_list))
         return notes
+    
+    def save_data_to_file(self):
+        pass
+
+    def retrive_data_from_file(self):
+        pass    
 
 
 class Note:
@@ -51,8 +57,11 @@ class Note:
 
     @title.setter
     def title(self, title):
-        if title == '':
-            raise ValueError("Value shood not be empty")
+        if_exists = note_book.get_note(title)
+        if if_exists:
+            raise ValueError(f"Note with title {title} already exists")
+        elif title == '':
+            raise ValueError("Value should not be empty")
         elif len(title) > 20:
             raise ValueError("Title should not exceed 20 characters")
         else:
@@ -61,7 +70,7 @@ class Note:
     @tag.setter
     def tag(self, tag):
         if tag == '':
-            raise ValueError("Value shood not be empty")
+            raise ValueError("Value should not be empty")
         elif len(tag) > 20:
             raise ValueError("Title should not exceed 20 characters")
         else:
@@ -70,7 +79,7 @@ class Note:
     @text.setter
     def text(self, text):
         if text == '':
-            raise ValueError("Value shood not be empty")
+            raise ValueError("Value should not be empty")
         if len(text) > 250:
             raise ValueError("Title should not exceed 250 characters")
         else:
@@ -89,6 +98,7 @@ class Title:
 class Content:
     def __init__(self, value):
         self.value = value
+
 
 ##############  MODULE FUNCTIONS ################
 
@@ -113,6 +123,8 @@ def input_error(func):
             return None
     return inner_func
 
+
+@input_error
 def get_instructions(message):
     command_not_found = True
 
@@ -164,13 +176,49 @@ def create_note_object():
 
     return [new_note]
 
+def create_note_table(note):
+    note_table = PrettyTable([f"Title: '{note.title}'   Tag: '{note.tag}"])
+    note_table.min_width = 50
+    note_table.add_row([note.text])
+    note_table.align = 'l'
+    
+    return note_table
+
 @input_error
 def add_note(args):
     [note] = args
     note_book.add_note(note)
-    return f"Note with title {note.title} was successfully added"
+    return f"Note with title '{note.title}' was successfully added"
 
+@input_error
+def get_note_by_title(args):
+    [title] = args
+    note = note_book.get_note(title)
+    if not note:
+        raise ValueError(f"Note with title '{title}' was not found")
+    return f"\n{create_note_table(note)}\n"
 
+@input_error
+def get_notes_by_tag(args):
+    [tag] = args
+    notes = note_book.get_notes_by_tag(tag)
+    result = ""
+    for note in notes:
+        table = create_note_table(note)
+        num = notes.index(note) + 1
+        result += f"\n   ----- {num} -----   \n{table}\n"
+    return result
+
+@input_error
+def edit_note(args):
+    [title] = args
+    note = note_book.get_note(title)
+    edited_text = prompt("Edit your note: ", default = note.text) 
+    note.text = edited_text
+    return "Note was successfully edited"
+
+def show_help():
+    pass
 
 def greet():
     print("How can I help you with managing the notes?")
@@ -193,18 +241,23 @@ def main():
 
     command, args = command_args
 
-    # print(command)
-    # print(args)
-
     match command:
         case "add note":
             bot_message = add_note(args)
+        case "get by title":
+            bot_message = get_note_by_title(args)
+        case 'get by tag':
+            bot_message = get_notes_by_tag(args) 
+        case 'edit note':
+            bot_message = edit_note(args)   
         case "exit":
             terminate_assitant()
 
     if bot_message:
         print(bot_message)
 
+
+##### MAIN PROCESS #####
 
 while chat_in_progress:
     main()
