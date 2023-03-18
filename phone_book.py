@@ -200,5 +200,73 @@ class Record:
                f"e-mail: {result_emails};\n" \
                f"birthday: {self.birthday};\n" \
                f"address: {self.address};\n"\
-            "..................."
+            "********************"
+            
+
+class AddressBook(UserDict):
+    def add_record(self, record):
+        self.data[record.name.value] = record
+
+    def show_book(self):
+        result = ""
+        for name, value in self.data.items():
+            s = f"{name}\n{value.contacts()}\n"
+            result += s
+        return result
+
+    def del_record(self, name):
+        self.data.pop(name)
+
+    # Search for contacts based on the user's search query
+    def search_contact(self, user_search):
+        
+        counter = 0
+        for value in self.data.values():
+            result = str(value.contacts()).lower().find(user_search)
+            if result != -1:
+                counter += 1
+                print(value.contacts())
+        if counter == 0:
+            return f"No data was found for your request. "
+
+    # A list of users who have a birthday coming up soon
+    def get_birthdays_per_range(self, range_of_days=7):
+
+        near_birthdays = {}
+        current_date = datetime.now().date()
+        for name, value in self.data.items():
+            if value.birthday:
+                user_date = value.birthday.value
+                user_date = datetime.strptime(user_date, '%d/%m/%Y').date()
+                user_date = user_date.replace(year=current_date.year)
+                delta_days = user_date - current_date
+
+                if 0 < delta_days.days <= range_of_days:
+                    near_birthdays.update({name: user_date})
+
+                else:
+                    user_date = user_date.replace(year=user_date.year + 1)
+                    delta_days = user_date - current_date
+                    if 0 < delta_days.days <= range_of_days:
+                        near_birthdays.update({name: user_date})
+
+                    elif 0 < delta_days.days > range_of_days:
+                        continue
+
+        print(f"\nNear birthdays for next {range_of_days} days:")
+        sorted_near_birthdays = dict(
+            sorted(near_birthdays.items(), key=lambda item: item[1]))
+        result = ''
+        for key, value in sorted_near_birthdays.items():
+            s = f"{key}'s birthday will be on {str(value)}\n"
+            result += s
+        return result
+
+
+p = Path("phone_book.bin")
+address_book = AddressBook()
+
+if p.exists():
+    with open("phone_book.bin", "rb") as file:
+        address_book.data = pickle.load(file)
    
