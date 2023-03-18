@@ -1,5 +1,7 @@
+import pathlib
 import pickle
 import re
+
 
 from collections import UserDict
 from prettytable import PrettyTable
@@ -7,7 +9,7 @@ from prompt_toolkit import prompt
 
 ########## COMMANDS ################
 
-COMMANDS = ['add note', 'delete note', 'get by tag', 'get by title', 'exit', 'edit note']
+COMMANDS = ['add note', 'delete note', 'get by tag', 'get by title', 'menu', 'edit note']
 
 
 
@@ -15,7 +17,7 @@ COMMANDS = ['add note', 'delete note', 'get by tag', 'get by title', 'exit', 'ed
 
 class NoteBook(UserDict):
     def add_note(self, note):
-        self.data.update({(note.title): note})
+        self.data.update({note.title: note})
 
     def get_note(self, title):
         note = self.data.get(title, None)
@@ -31,10 +33,18 @@ class NoteBook(UserDict):
         return notes
     
     def save_data_to_file(self):
-        pass
+        with open('note_book/notes_data.bin', 'wb') as file:
+            pickle.dump(self.data, file)
 
-    def retrive_data_from_file(self):
-        pass    
+    def retrieve_data_from_file(self):
+        with open('note_book/notes_data.bin', 'rb') as file:
+            is_file_empty = not bool(file.read()) 
+            if is_file_empty:
+                return
+            else:
+                file.seek(0)
+                deserialized = pickle.load(file)
+                self.data = deserialized 
 
 
 class Note:
@@ -133,18 +143,14 @@ def get_instructions(message):
             if command == "add note":
                 args = create_note_object()
                 return (command, args)
-            args = message.replace(command, '').strip().split(' ')
+            args = message.replace(command, '').strip()
             command_not_found = False
             return (command, args)
     if command_not_found:
         raise ValueError(
             f"Assistant: Please enter a valid command: {', '.join(COMMANDS)}")
 
-def check_validity(value, status, type):
-    if value != "":
-        status[type] = True
-    else:
-        print("It should not be empty!")
+
 
 
 def create_note_object():
@@ -177,7 +183,7 @@ def create_note_object():
     return [new_note]
 
 def create_note_table(note):
-    note_table = PrettyTable([f"Title: '{note.title}'   Tag: '{note.tag}"])
+    note_table = PrettyTable([f"Title: '{note.title}'   Tag: '{note.tag}'"])
     note_table.min_width = 50
     note_table.add_row([note.text])
     note_table.align = 'l'
@@ -192,7 +198,7 @@ def add_note(args):
 
 @input_error
 def get_note_by_title(args):
-    [title] = args
+    title = args
     note = note_book.get_note(title)
     if not note:
         raise ValueError(f"Note with title '{title}' was not found")
@@ -200,8 +206,10 @@ def get_note_by_title(args):
 
 @input_error
 def get_notes_by_tag(args):
-    [tag] = args
+    tag = args
     notes = note_book.get_notes_by_tag(tag)
+    if not len(notes):
+        print(f"No notes holding '{tag}' tag were found")
     result = ""
     for note in notes:
         table = create_note_table(note)
@@ -211,14 +219,17 @@ def get_notes_by_tag(args):
 
 @input_error
 def edit_note(args):
-    [title] = args
+    title = args
     note = note_book.get_note(title)
     edited_text = prompt("Edit your note: ", default = note.text) 
     note.text = edited_text
     return "Note was successfully edited"
 
-def show_help():
-    pass
+@input_error
+def delete_note(args):
+    title = args
+    deleted = note_book.delete_note(title)
+    print(f"Note with '{deleted.title}' was successfully deleted")
 
 def greet():
     print("How can I help you with managing the notes?")
@@ -232,6 +243,7 @@ def terminate_assitant():
 
 
 def main():
+    note_book.retrieve_data_from_file()
     message = input("Enter command: ")
     command_args = get_instructions(message)
     bot_message = None
@@ -240,6 +252,7 @@ def main():
         return
 
     command, args = command_args
+
 
     match command:
         case "add note":
@@ -250,12 +263,15 @@ def main():
             bot_message = get_notes_by_tag(args) 
         case 'edit note':
             bot_message = edit_note(args)   
-        case "exit":
+        case 'delete note':
+            bot_message = delete_note(args)
+        case "menu":
             terminate_assitant()
 
     if bot_message:
         print(bot_message)
 
+    note_book.save_data_to_file()
 
 ##### MAIN PROCESS #####
 
