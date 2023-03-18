@@ -9,7 +9,7 @@ from prompt_toolkit import prompt
 
 ########## COMMANDS ################
 
-COMMANDS = ['add note', 'delete note', 'get by tag', 'get by title', 'menu', 'edit note']
+COMMANDS = ['add note', 'delete note', 'get by tag', 'get by title', 'get all', 'menu', 'edit note']
 
 
 
@@ -32,6 +32,10 @@ class NoteBook(UserDict):
         notes = list(filter(lambda x: x.tag == tag, notes_list))
         return notes
     
+    def get_all(self):
+        notes_list = list(self.data.values())
+        return notes_list
+
     def save_data_to_file(self):
         with open('note_book/notes_data.bin', 'wb') as file:
             pickle.dump(self.data, file)
@@ -185,6 +189,7 @@ def create_note_object():
 def create_note_table(note):
     note_table = PrettyTable([f"Title: '{note.title}'   Tag: '{note.tag}'"])
     note_table.min_width = 50
+    note_table.max_width = 50
     note_table.add_row([note.text])
     note_table.align = 'l'
     
@@ -210,6 +215,20 @@ def get_notes_by_tag(args):
     notes = note_book.get_notes_by_tag(tag)
     if not len(notes):
         print(f"No notes holding '{tag}' tag were found")
+        return
+    result = ""
+    for note in notes:
+        table = create_note_table(note)
+        num = notes.index(note) + 1
+        result += f"\n   ----- {num} -----   \n{table}\n"
+    return result
+
+@input_error
+def get_all_notes():
+    notes = note_book.get_all()
+    if not len(notes):
+        print("There have been no notes added yet")
+        return
     result = ""
     for note in notes:
         table = create_note_table(note)
@@ -221,7 +240,7 @@ def get_notes_by_tag(args):
 def edit_note(args):
     title = args
     note = note_book.get_note(title)
-    edited_text = prompt("Edit your note: ", default = note.text) 
+    edited_text = prompt("Edit your note >>> ", default = note.text) 
     note.text = edited_text
     return "Note was successfully edited"
 
@@ -240,11 +259,13 @@ def terminate_assitant():
     chat_in_progress = False
 
 
-
-
 def main():
+    while chat_in_progress:
+        start_bot()
+
+def start_bot():
     note_book.retrieve_data_from_file()
-    message = input("Enter command: ")
+    message = (input("Enter your command >>> ") or "no command")
     command_args = get_instructions(message)
     bot_message = None
 
@@ -261,6 +282,8 @@ def main():
             bot_message = get_note_by_title(args)
         case 'get by tag':
             bot_message = get_notes_by_tag(args) 
+        case 'get all':
+            bot_message = get_all_notes()
         case 'edit note':
             bot_message = edit_note(args)   
         case 'delete note':
@@ -275,5 +298,4 @@ def main():
 
 ##### MAIN PROCESS #####
 
-while chat_in_progress:
-    main()
+main()
