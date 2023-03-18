@@ -298,4 +298,3 @@ def start_bot():
 
 ##### MAIN PROCESS #####
 
-main()
