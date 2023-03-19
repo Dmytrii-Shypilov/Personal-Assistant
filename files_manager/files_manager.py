@@ -5,6 +5,7 @@ import shutil
 from typing import Tuple
 from os.path import split
 from pathlib import Path
+from prettytable import PrettyTable
 
 
 def create_folders_from_groups(path_to_folder: str, folder_names: dict) -> None:
@@ -217,20 +218,20 @@ def main():
     IGNORE_LIST = ["images", "video", "documents", "audio", "archives"]
 
     groups_of_format = {
-        "images": ["JPEG", "PNG", "JPG", "SVG"],
+        "image": ["JPEG", "PNG", "JPG", "SVG"],
         "video": ["AVI", "MP4", "MOV", "MKV"],
-        "documents": ["DOC", "DOCX", "TXT", "PDF", "XLSX", "PPTX"],
+        "document": ["DOC", "DOCX", "TXT", "PDF", "XLSX", "PPTX"],
         "audio": ["MP3", "OGG", "WAV", "AMR"],
-        "archives": ["ZIP", "GZ", "TAR", "RAR"],
+        "archive": ["ZIP", "GZ", "TAR", "RAR"],
     }
 
     # dict with files in its type of format
     groups_of_files = {
-        "images": [],
+        "image": [],
         "video": [],
-        "documents": [],
+        "document": [],
         "audio": [],
-        "archives": [],
+        "archive": [],
     }
 
     # input path to folder
@@ -265,11 +266,16 @@ def main():
     delete_empty_folders(folders_paths)
     unpack_archives(Path(path_for_sort), groups_of_format)
 
-    # Data output
+    # Data output block
+    output_table = PrettyTable(["File type", "Number of files"])
+
     for name, list_of_formats in groups_of_files.items():
-        print(f"In category {name} files: {list_of_formats}")
-    print("Known formats: ", ", ".join(set_of_formats))
-    print("Unknown formats: ", ", ".join(set_of_unknown_formats))
+        output_table.add_row([name, len(list_of_formats)])
+
+    output_table.add_row(["Known formats", len(set_of_formats)])
+    output_table.add_row(["Unknown formats", len(set_of_unknown_formats)])
+
+    print(output_table)
 
 
 if __name__ == "__main__":
