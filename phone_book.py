@@ -89,20 +89,22 @@ class Birthday(Field):
             print(f'Please, input the date in format dd/mm/yyyy ')
 
 
-class Record:
+class Contact:
 
-    def __init__(self, name, phone=None, email=None, birthday=None, address=None):
+    def __init__(self, name, phones, emails=None, birthday=None, address=None, notations=None):
         self.name = name
         self.birthday = birthday
         self.address = address
 
-        self.emails = []
-        if email:
-            self.emails.append(email)
+        if emails is None:
+            emails = []
+        self.emails = emails
 
-        self.phones = []
-        if phone:
-            self.phones.append(phone)
+        self.phones = phones
+        
+        if notations is None:
+            notations = []
+        self.notations = notations
 
     
     # Phone
@@ -181,6 +183,9 @@ class Record:
 
     def delete_address(self):
         self.address = None
+     
+    def add_notations(self, notation):
+        self.notations.append(notation)
 
     def contacts(self):
         phon = []
@@ -200,12 +205,18 @@ class Record:
                f"e-mail: {result_emails};\n" \
                f"birthday: {self.birthday};\n" \
                f"address: {self.address};\n"\
+                f"notations: {self.notations};\n"\
             "********************"
-            
+    
+    def __str__(self):
+        return self.contacts()
+    
+    def __repr__(self):
+        return self.contacts()
 
-class AddressBook(UserDict):
-    def add_record(self, record):
-        self.data[record.name.value] = record
+class ContactBook(UserDict):
+    def add_contact(self, contact):
+        self.data[contact.name.value] = contact
 
     def show_book(self):
         result = ""
@@ -214,20 +225,19 @@ class AddressBook(UserDict):
             result += s
         return result
 
-    def del_record(self, name):
+    def del_contact(self, name):
         self.data.pop(name)
 
     # Search for contacts based on the user's search query
     def search_contact(self, user_search):
         
-        counter = 0
+        data = []
+     
         for value in self.data.values():
-            result = str(value.contacts()).lower().find(user_search)
+            result = str(value.name).lower().find(user_search.lower())
             if result != -1:
-                counter += 1
-                print(value.contacts())
-        if counter == 0:
-            return f"No data was found for your request. "
+                data.append(value)
+        return data
 
     # A list of users who have a birthday coming up soon
     def get_birthdays_per_range(self, range_of_days=7):
@@ -261,12 +271,40 @@ class AddressBook(UserDict):
             s = f"{key}'s birthday will be on {str(value)}\n"
             result += s
         return result
+   
+   
+if __name__ == "__main__":
+    contact_book = ContactBook()
+    contact = Contact(name=Name('Bob'), phones=[Phone("0989009090")],emails=[Email("dvvd@fbb.com")], birthday=Birthday("21/03/1990"), address=Address("dfdvgfddb"))
+    contact_book.add_contact(contact)
+    
+    contact = Contact(name=Name('Djo'), phones=[Phone("0999009090")], emails=[Email("dvggvd@fbb.com")], birthday=Birthday("22/03/1991"), address=Address("qwqwqwqw"))
+    contact_book.add_contact(contact)
+    
+    contact = Contact(name=Name('Tom'), phones=[Phone("0967009090")], emails=[Email("dvggvd@fbb.com")], birthday=Birthday("9/10/1992"), address=Address("55555555"))
+    contact_book.add_contact(contact)
+    
+    contact = Contact(name=Name('Don'), phones=[Phone("0955009090")], emails=[Email("rrrrgvd@fbb.com")], birthday=Birthday("1/1/1989"), address=Address("wwwwwwwww"))
+    contact_book.add_contact(contact)
+    
+    # print(contact_book.show_book())
+    
+    # print(contact_book.get_birthdays_per_range())
+    
+    # contact = Contact(name=Name('Bob'), phones=[Phone("989009090")], emails=[Email("dvvd@fbb.com")], birthday=Birthday("21/03/1990"), address=Address("dfdvgfddb"))
+    # contact = Contact(name=Name('Bob'), phones=[Phone("0989009090")],emails=[Email("dvvdfbb.com")], birthday=Birthday("21/03/1990"), address=Address("dfdvgfddb"))
 
-
-p = Path("phone_book.bin")
-address_book = AddressBook()
-
-if p.exists():
-    with open("phone_book.bin", "rb") as file:
-        address_book.data = pickle.load(file)
+    # print(contact_book.search_contact('Don'))
+    
+    # edit_contact = contact_book.search_contact('Don')[-1]
+    # edit_contact.change_phone("0955009090","0951111111")
+    # print(contact_book.show_book())
+    
+    # del_contact = contact_book.del_contact('Tom')
+    # print(contact_book.show_book())
+    
+    # add_notations = contact_book.search_contact('Don')[-1]
+    # add_notations.add_notations("dvcdsvdsvdsvdsv")
+    # print(contact_book.show_book())
+    
    
