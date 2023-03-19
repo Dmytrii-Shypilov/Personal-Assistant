@@ -215,23 +215,23 @@ def unpack_archives(path_to_archives, groups_of_format):
 def main():
 
     # ignore list with names of folders to be ignored
-    IGNORE_LIST = ["images", "video", "documents", "audio", "archives"]
+    IGNORE_LIST = ["images", "videos", "documents", "audios", "archives"]
 
     groups_of_format = {
-        "image": ["JPEG", "PNG", "JPG", "SVG"],
-        "video": ["AVI", "MP4", "MOV", "MKV"],
-        "document": ["DOC", "DOCX", "TXT", "PDF", "XLSX", "PPTX"],
-        "audio": ["MP3", "OGG", "WAV", "AMR"],
-        "archive": ["ZIP", "GZ", "TAR", "RAR"],
+        "images": ["JPEG", "PNG", "JPG", "SVG"],
+        "videos": ["AVI", "MP4", "MOV", "MKV"],
+        "documents": ["DOC", "DOCX", "TXT", "PDF", "XLSX", "PPTX"],
+        "audios": ["MP3", "OGG", "WAV", "AMR"],
+        "archives": ["ZIP", "GZ", "TAR", "RAR"],
     }
 
     # dict with files in its type of format
     groups_of_files = {
-        "image": [],
-        "video": [],
-        "document": [],
-        "audio": [],
-        "archive": [],
+        "images": [],
+        "videos": [],
+        "documents": [],
+        "audios": [],
+        "archives": [],
     }
 
     # input path to folder
