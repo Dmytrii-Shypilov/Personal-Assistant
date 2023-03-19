@@ -215,7 +215,7 @@ def unpack_archives(path_to_archives, groups_of_format):
 def main():
 
     # ignore list with names of folders to be ignored
-    IGNORE_LIST = ["images", "video", "documents", "audio", "archives"]
+    IGNORE_LIST = ["images", "videos", "documents", "audios", "archives"]
 
     groups_of_format = {
         "images": ["JPEG", "PNG", "JPG", "SVG"],
