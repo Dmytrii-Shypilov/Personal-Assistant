@@ -31,14 +31,14 @@ cities_completer = WordCompleter(["Kabul", "Tirana", "Algiers", "Andorra la Vell
                                   "Sri Jayawardenapura Kotte", "Khartoum", "Paramaribo", "Stockholm", "Bern", "Damascus", "Taipei", 
                                   "Dushanbe", "Dodoma[23]", "Bangkok", "Lome", "Nuku'alofa", "Port of Spain", "Tunis", "Ankara", "Ashgabat", 
                                   "Funafuti", "Kampala", "Kyiv", "Abu Dhabi", "London", "Washington D.C.", "Montevideo", "Tashkent", "Port Vila", 
-                                  "Vatican City", "Caracas", "Hanoi", "Cardiff", "Sana'a", "Lusaka", "Harare", "back"], ignore_case=True)
+                                  "Vatican City", "Caracas", "Hanoi", "Cardiff", "Sana'a", "Lusaka", "Harare", "menu"], ignore_case=True)
 
-style = Style.from_dict({
-    'completion-menu.completion': 'bg:#0d2fc9 #ffffff',
-    'completion-menu.completion.current': 'bg:#f6fa0c #000000',
-    'scrollbar.background': 'bg:#88aaaa',
-    'scrollbar.button': 'bg:#222222',
-})
+# style = Style.from_dict({
+#     'completion-menu.completion': 'bg:#0d2fc9 #ffffff',
+#     'completion-menu.completion.current': 'bg:#f6fa0c #000000',
+#     'scrollbar.background': 'bg:#88aaaa',
+#     'scrollbar.button': 'bg:#222222',
+# })
 
 def weather(city = 'Kyiv'):
     city = city + "+weather"
@@ -71,9 +71,9 @@ def weather(city = 'Kyiv'):
         weather = "Info: " + day.find("img").attrs["alt"]
         temp = day.findAll("span", {"class": "wob_t"})
         # maximum temparature 
-        max_temp = "Max. temperature: " + temp[0].text
+        max_temp = "Max. temperature: " + temp[0].text + " °C"
         # minimum temparature
-        min_temp = "Min. temperature: " + temp[2].text
+        min_temp = "Min. temperature: " + temp[2].text + " °C"
         next_days.append([day_name, weather, max_temp, min_temp])
 
     format_weather(data, next_days)
@@ -85,7 +85,8 @@ def format_weather(data: list, next_days = None ):
     my_weather_table = PrettyTable()
     my_weather_table.add_column(data[1], data[2:])
     my_weather_table.set_style(SINGLE_BORDER)
-    my_weather_table.align = 'l'
+    my_weather_table.max_width = 200
+    my_weather_table.align = 'c'
     print(my_weather_table)
 
     next_days_table =PrettyTable()
@@ -94,7 +95,7 @@ def format_weather(data: list, next_days = None ):
     next_days_table.set_style(SINGLE_BORDER)
     next_days_table.align = 'c'
     print(next_days_table)
-    print("\nReturn to main menu type 'back'\n")
+    print("\nReturn to main menu type 'menu'\n")
 
 
 def is_text(text) -> str:
@@ -106,7 +107,10 @@ validator = Validator.from_callable(is_text,
 
 
 def main():
-    session = PromptSession(completer=cities_completer, style=style)
+    session = PromptSession(completer=cities_completer)
+    # with styling dropdown list
+    # session = PromptSession(completer=cities_completer, style=style) 
+
     weather() # default Kyiv
     while True:
         try:
@@ -118,7 +122,7 @@ def main():
         except IndexError:
             print("Wrong input. Try again starting from letter.")
         else:
-            if city == "back":
+            if city == "menu":
                 break
             else:
                 weather(city)

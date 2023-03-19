@@ -1,4 +1,6 @@
 from note_book.note_book import Note, NoteBook, main as notes_manager
+from weather.weather import main as weather_manager
+
 from prettytable import PrettyTable
 
 
@@ -45,7 +47,9 @@ def start_assistant():
 
     match message:
         case "1":
-           notes_manager() 
+           notes_manager()
+        case "4":
+            weather_manager() 
         case "exit":
            terminate_program()
 
