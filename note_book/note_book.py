@@ -6,11 +6,12 @@ import re
 from collections import UserDict
 from prettytable import PrettyTable
 from prompt_toolkit import prompt
+from prompt_toolkit.completion import WordCompleter
 
 ########## COMMANDS ################
 
 COMMANDS = ['add note', 'delete note', 'get by tag', 'get by title', 'get all', 'menu', 'edit note']
-
+autocomplete_commands = WordCompleter(COMMANDS)
 
 
 ########## CLASSES ##################
@@ -265,7 +266,7 @@ def main():
 
 def start_bot():
     note_book.retrieve_data_from_file()
-    message = (input("Enter your command >>> ") or "no command")
+    message = (prompt("Enter your command >>> ", completer=autocomplete_commands) or "no command")
     command_args = get_instructions(message)
     bot_message = None
 
