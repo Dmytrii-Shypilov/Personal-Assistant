@@ -299,3 +299,5 @@ def start_bot():
 
 ##### MAIN PROCESS #####
 
+if __name__ == "__main__":
+    main()
