@@ -9,17 +9,17 @@ from phone_book import ContactBook, Name, Contact
 from exception import input_error
 
 
-p = Path("phone_book.bin")
+p = Path("phone_book/phone_book.bin")
 phone_book = ContactBook()
 if p.exists():
-    with open("phone_book.bin", "rb") as file:
+    with open("phone_book/phone_book.bin", "rb") as file:
         phone_book.data = pickle.load(file)
 
 
 def save_to_pickle():
     """ Save address book in pickle file"""
 
-    with open("phone_book.bin", "wb") as fh:
+    with open("phone_book/phone_book.bin", "wb") as fh:
         pickle.dump(phone_book.data, fh)
 
 
