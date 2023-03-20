@@ -1,5 +1,7 @@
 from files_manager.files_manager import start_sorter as sorting_manager
 from note_book.note_book import Note, NoteBook, main as notes_manager
+from phone_book.phone_book import Contact, Email, Birthday, Phone, Address, ContactBook
+from phone_book.phone_bot import main as phone_book_manager
 from prettytable import PrettyTable
 from weather.weather import main as weather_manager
 
@@ -60,6 +62,8 @@ def start_assistant():
     match message:
         case "1":
             notes_manager()
+        case "2":
+            phone_book_manager()
         case '3':
             sorting_manager()
         case "4":

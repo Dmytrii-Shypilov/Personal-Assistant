@@ -5,8 +5,8 @@ from pathlib import Path
 from collections import UserDict
 from datetime import datetime
 import pickle
-from phone_book import ContactBook, Name, Contact
-from exception import input_error
+from phone_book.phone_book import ContactBook, Name, Contact
+from phone_book.exception import input_error
 
 
 p = Path("phone_book/phone_book.bin")
@@ -302,7 +302,7 @@ def helps(value):
     17) to search contact, where is 'text', write command: search contact <text>
     18) to see full record of contact, write: phone <name>
     19) to see all contacts, write command: show addressbook
-    20) to say goodbye, write one of these commands: good bye / close / exit / . 
+    20) to go to MENU, write command: menu . 
     21) to say hello, write command: hello
     22) to see help, write command: help
     """
@@ -311,9 +311,7 @@ def helps(value):
 
 handlers = {
     "hello": say_hello,
-    "good bye": say_goodbye,
-    "close": say_goodbye,
-    "exit": say_goodbye,
+    "menu": say_goodbye,
     "help": helps,
     "add contact": add_contact,
     "remove contact": remove_contact,
@@ -381,7 +379,7 @@ def main():
 
         command = command.strip().lower()
         
-        if command in ("exit", "close", "good bye", "."):
+        if command in ("menu"):
             say_goodbye()
             break
         else:
