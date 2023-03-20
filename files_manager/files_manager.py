@@ -243,7 +243,7 @@ def main():
         chat_in_progress = False
 
     if not os.path.exists(path_for_sort):
-        print('Your path does not exist!')
+        print("Your path does not exist!")
         return
 
     # Create lists with names and paths to files and folders
