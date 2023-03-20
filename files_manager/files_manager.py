@@ -237,6 +237,13 @@ def main():
     # input path to folder
     path_for_sort = input("Input path to folder that you want to sort: ")
 
+    if not os.path.exists(path_for_sort):
+        print('Your path does not exist!')
+        path_for_sort = 'menu'
+
+    if path_for_sort == "menu":
+        return
+
     # Create lists with names and paths to files and folders
     file_names, files_paths = parse_files(path_for_sort, IGNORE_LIST)
     folders_names, folders_paths = parse_folders(path_for_sort, IGNORE_LIST)
