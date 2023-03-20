@@ -219,7 +219,7 @@ def main():
     IGNORE_LIST = ["images", "videos", "documents", "audios", "archives"]
 
     groups_of_format = {
-        "images": ["JPEG", "PNG", "JPG", "SVG"],
+        "images": ["JPEG", "PNG", "JPG", "SVG", "BMP"],
         "videos": ["AVI", "MP4", "MOV", "MKV"],
         "documents": ["DOC", "DOCX", "TXT", "PDF", "XLSX", "PPTX"],
         "audios": ["MP3", "OGG", "WAV", "AMR"],
