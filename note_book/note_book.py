@@ -150,6 +150,8 @@ def get_instructions(message):
                 return (command, args)
             args = message.replace(command, '').strip()
             command_not_found = False
+            if command not in ["get all", "menu"] and args == "":
+                raise ValueError("Please enter required arguments: title/tag")
             return (command, args)
     if command_not_found:
         raise ValueError(
@@ -162,7 +164,7 @@ def create_note_object():
     new_note = Note()
     while True:
         try:
-            title = input("Enter a title: ")
+            title = input("Enter a title: ").strip()
             new_note.title = title
         except ValueError as err:
             print(err.args[0])
@@ -170,7 +172,7 @@ def create_note_object():
         break
     while True:
         try:
-            tag = input("Enter a tag: ")
+            tag = input("Enter a tag: ").strip()
             new_note.tag = tag
         except ValueError as err:
             print(err.args[0])
@@ -178,7 +180,7 @@ def create_note_object():
         break
     while True:
         try:
-            text = input("Type your note: ")
+            text = input("Type your note: ").strip()
             new_note.text = text
         except ValueError as err:
             print(err.args[0])
@@ -241,9 +243,12 @@ def get_all_notes():
 def edit_note(args):
     title = args
     note = note_book.get_note(title)
-    edited_text = prompt("Edit your note >>> ", default = note.text) 
-    note.text = edited_text
-    return "Note was successfully edited"
+    if note:
+        edited_text = prompt("Edit your note >>> ", default = note.text) 
+        note.text = edited_text
+        return "Note was successfully edited"
+    else:
+        return f"Note with title '{title}' was not found"
 
 @input_error
 def delete_note(args):
@@ -274,7 +279,6 @@ def start_bot():
         return
 
     command, args = command_args
-
 
     match command:
         case "add note":

@@ -31,7 +31,7 @@ cities_completer = WordCompleter(["Kabul", "Tirana", "Algiers", "Andorra la Vell
                                   "Sri Jayawardenapura Kotte", "Khartoum", "Paramaribo", "Stockholm", "Bern", "Damascus", "Taipei", 
                                   "Dushanbe", "Dodoma[23]", "Bangkok", "Lome", "Nuku'alofa", "Port of Spain", "Tunis", "Ankara", "Ashgabat", 
                                   "Funafuti", "Kampala", "Kyiv", "Abu Dhabi", "London", "Washington D.C.", "Montevideo", "Tashkent", "Port Vila", 
-                                  "Vatican City", "Caracas", "Hanoi", "Cardiff", "Sana'a", "Lusaka", "Harare", "menu"], ignore_case=True)
+                                  "Vatican City", "Caracas", "Hanoi", "Cardiff", "Sana'a", "Lusaka", "Harare", "Dubai", "menu"], ignore_case=True)
 
 # style = Style.from_dict({
 #     'completion-menu.completion': 'bg:#0d2fc9 #ffffff',
@@ -63,6 +63,7 @@ def weather(city = 'Kyiv'):
     data = [city, time, temp, info, humidity, wind]
 
     next_days =[]
+  
     days = soup.find("div", attrs={"id": "wob_dp"})
     for day in days.findAll("div", attrs={"class": "wob_df"}):
         # extract the name of the day
@@ -75,26 +76,33 @@ def weather(city = 'Kyiv'):
         # minimum temparature
         min_temp = "Min. temperature: " + temp[2].text + " °C"
         next_days.append([day_name, weather, max_temp, min_temp])
+    
+    next_days_split = [next_days[0:4], next_days[4:len(next_days)-1]]
 
-    format_weather(data, next_days)
+    format_weather(data, next_days_split)
+
+def create_table(data):
+    my_table =PrettyTable()
+    for i in data:
+        my_table.add_column(i[0], i[1:])
+    my_table.set_style(SINGLE_BORDER)
+    my_table.align = 'c'
+    return my_table
 
 
-
-def format_weather(data: list, next_days = None ):
+def format_weather(data: list, next_days_split = None ):
     print(data[0])
     my_weather_table = PrettyTable()
     my_weather_table.add_column(data[1], data[2:])
     my_weather_table.set_style(SINGLE_BORDER)
-    my_weather_table.max_width = 200
+    # my_weather_table.max_width = 200
     my_weather_table.align = 'c'
     print(my_weather_table)
 
-    next_days_table =PrettyTable()
-    for i in next_days:
-        next_days_table.add_column(i[0], i[1:])
-    next_days_table.set_style(SINGLE_BORDER)
-    next_days_table.align = 'c'
-    print(next_days_table)
+    first_table = create_table(next_days_split[0])
+    second_table = create_table(next_days_split[1])
+
+    print(f"{first_table}\n{second_table}")
     print("\nReturn to main menu type 'menu'\n")
 
 
