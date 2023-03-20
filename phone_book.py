@@ -271,21 +271,22 @@ class ContactBook(UserDict):
             s = f"{key}'s birthday will be on {str(value)}\n"
             result += s
         return result
+
+
    
-   
-if __name__ == "__main__":
-    contact_book = ContactBook()
-    contact = Contact(name=Name('Bob'), phones=[Phone("0989009090")],emails=[Email("dvvd@fbb.com")], birthday=Birthday("21/03/1990"), address=Address("dfdvgfddb"))
-    contact_book.add_contact(contact)
+# if __name__ == "__main__":
+#     contact_book = ContactBook()
+#     contact = Contact(name=Name('Bob'), phones=[Phone("0989009090")],emails=[Email("dvvd@fbb.com")], birthday=Birthday("21/03/1990"), address=Address("dfdvgfddb"))
+#     contact_book.add_contact(contact)
     
-    contact = Contact(name=Name('Djo'), phones=[Phone("0999009090")], emails=[Email("dvggvd@fbb.com")], birthday=Birthday("22/03/1991"), address=Address("qwqwqwqw"))
-    contact_book.add_contact(contact)
+#     contact = Contact(name=Name('Djo'), phones=[Phone("0999009090")], emails=[Email("dvggvd@fbb.com")], birthday=Birthday("22/03/1991"), address=Address("qwqwqwqw"))
+#     contact_book.add_contact(contact)
     
-    contact = Contact(name=Name('Tom'), phones=[Phone("0967009090")], emails=[Email("dvggvd@fbb.com")], birthday=Birthday("9/10/1992"), address=Address("55555555"))
-    contact_book.add_contact(contact)
+#     contact = Contact(name=Name('Tom'), phones=[Phone("0967009090")], emails=[Email("dvggvd@fbb.com")], birthday=Birthday("9/10/1992"), address=Address("55555555"))
+#     contact_book.add_contact(contact)
     
-    contact = Contact(name=Name('Don'), phones=[Phone("0955009090")], emails=[Email("rrrrgvd@fbb.com")], birthday=Birthday("1/1/1989"), address=Address("wwwwwwwww"))
-    contact_book.add_contact(contact)
+#     contact = Contact(name=Name('Don'), phones=[Phone("0955009090")], emails=[Email("rrrrgvd@fbb.com")], birthday=Birthday("1/1/1989"), address=Address("wwwwwwwww"))
+#     contact_book.add_contact(contact)
     
     # print(contact_book.show_book())
     
