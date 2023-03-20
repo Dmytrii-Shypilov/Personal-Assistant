@@ -1,10 +1,7 @@
+from files_manager.files_manager import main as sorting_manager
 from note_book.note_book import Note, NoteBook, main as notes_manager
-from weather.weather import main as weather_manager
-
 from prettytable import PrettyTable
-
-
-
+from weather.weather import main as weather_manager
 
 
 logo = """ 
@@ -20,14 +17,24 @@ ________________________________________________________________________________
 """
 MENU_ITEMS = ["NOTE BOOK", "ADDRESS BOOK", "FOLDER SORTER", "WEATHER"]
 
-COMMANNDS = ['exit']
+COMMANNDS = ['1', '2', '3', '4', 'exit']
 
 chat_in_progress = True
 
+def check_command_validity(func):
+    def inner():
+        try:
+            res = func()
+            return res
+        except ValueError as err:
+            print(err.args[0])
+        
+    return inner
+
 def create_menu_table():
-    menu_table = PrettyTable(["ID","MAIN MENU"])
+    menu_table = PrettyTable(["ID", "MAIN MENU"])
     for item in MENU_ITEMS:
-        menu_table.add_row([f"{MENU_ITEMS.index(item)+1}",f"{item}"])
+        menu_table.add_row([f"{MENU_ITEMS.index(item)+1}", f"{item}"])
     menu_table.min_table_width = 40
     menu_table.max_table_width = 40
     print(menu_table)
@@ -41,17 +48,24 @@ def terminate_program():
 def greeting():
     print(logo)
 
-
+@check_command_validity
 def start_assistant():
-    message = input('Please, type 1,2,3 or 4 in order to choose your tool >>> ')
+    message = input(
+        "\nPlease, type 1,2,3 or 4 in order to choose your tool, or 'exit' to leave >>> ")
+
+    if message not in COMMANNDS:
+        message = "This is invalid command.\n"
+        raise ValueError(message)
 
     match message:
         case "1":
-           notes_manager()
+            notes_manager()
+        case '3':
+            sorting_manager()
         case "4":
-            weather_manager() 
+            weather_manager()
         case "exit":
-           terminate_program()
+            terminate_program()
 
 
 def main():
@@ -59,11 +73,12 @@ def main():
 
     while chat_in_progress:
         if not command_call:
-            greeting()  
-        create_menu_table()   
+            greeting()
+        create_menu_table()
         start_assistant()
-        command_call +=1
+        command_call += 1
 
 
+if __name__ == "__main__":
+        main()
 
-main()
