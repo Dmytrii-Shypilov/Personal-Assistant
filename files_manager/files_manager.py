@@ -7,6 +7,7 @@ from os.path import split
 from pathlib import Path
 from prettytable import PrettyTable
 
+chat_in_progress = True
 
 def create_folders_from_groups(path_to_folder: str, folder_names: dict) -> None:
 
@@ -213,7 +214,7 @@ def unpack_archives(path_to_archives, groups_of_format):
 
 
 def main():
-
+    global chat_in_progress
     # ignore list with names of folders to be ignored
     IGNORE_LIST = ["images", "videos", "documents", "audios", "archives"]
 
@@ -238,7 +239,7 @@ def main():
     path_for_sort = input("Input path to folder that you want to sort: ")
 
     if path_for_sort == "menu":
-        return
+        chat_in_progress = False
 
     if not os.path.exists(path_for_sort):
         print('Your path does not exist!')
@@ -284,6 +285,9 @@ def main():
 
     print(output_table)
 
+def start_sorter():
+    while chat_in_progress:
+        main()
 
 if __name__ == "__main__":
-    main()
+    start_sorter()

@@ -1,4 +1,4 @@
-from files_manager.files_manager import main as sorting_manager
+from files_manager.files_manager import start_sorter as sorting_manager
 from note_book.note_book import Note, NoteBook, main as notes_manager
 from prettytable import PrettyTable
 from weather.weather import main as weather_manager
