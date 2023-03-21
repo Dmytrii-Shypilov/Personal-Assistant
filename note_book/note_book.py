@@ -284,7 +284,7 @@ def main():
 
 def start_bot():
     note_book.retrieve_data_from_file()
-    message = (prompt("Enter your command >>> ", completer=autocomplete_commands) or "no command")
+    message = (prompt("\n(NOTE BOOK) Enter command >>> ", completer=autocomplete_commands) or "no command")
     command_args = get_instructions(message)
     bot_message = None
 

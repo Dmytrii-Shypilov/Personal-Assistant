@@ -255,7 +255,7 @@ def start_sorter():
     }
 
     # input path to folder
-    path_for_sort = input("Input path to folder that you want to sort: ")
+    path_for_sort = input("\n(FOLDER SORTER) Input path to folder that you want to sort >>> ")
 
     if path_for_sort == "menu":
         chat_in_progress = False

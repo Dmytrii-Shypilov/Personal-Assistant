@@ -5,8 +5,8 @@ from pathlib import Path
 from collections import UserDict
 from datetime import datetime
 import pickle
-from phone_book import ContactBook, Name, Contact
-from exception import input_error
+from phone_book.phone_book import ContactBook, Name, Contact
+from phone_book.exception import input_error
 
 
 p = Path("phone_book/phone_book.bin")
@@ -372,10 +372,11 @@ def main():
     
     while True:
         
-        command = prompt('Enter command: ', completer=completer)
+        command = prompt('(ADDRESS BOOK) Enter command >>> ', completer=completer)
 
         command = command.strip().lower()
-        
+        if command not in handlers.keys():
+            print("\nEnter a valid command. Type 'help' for additional info")
         if command in ("menu"):
             say_goodbye()
             break

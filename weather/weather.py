@@ -122,7 +122,7 @@ def main():
     weather() # default Kyiv
     while True:
         try:
-            city = session.prompt('Enter city >>> ', validator=validator)
+            city = session.prompt('(WEATHER) Enter city >>> ', validator=validator)
         except KeyboardInterrupt:
             continue
         except EOFError:
