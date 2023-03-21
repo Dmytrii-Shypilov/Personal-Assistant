@@ -5,8 +5,8 @@ from pathlib import Path
 from collections import UserDict
 from datetime import datetime
 import pickle
-from phone_book.phone_book import ContactBook, Name, Contact
-from phone_book.exception import input_error
+from phone_book import ContactBook, Name, Contact
+from exception import input_error
 
 
 p = Path("phone_book/phone_book.bin")
@@ -16,8 +16,8 @@ if p.exists():
         phone_book.data = pickle.load(file)
 
 
+# Save address book in pickle file.
 def save_to_pickle():
-    """ Save address book in pickle file"""
 
     with open("phone_book/phone_book.bin", "wb") as fh:
         pickle.dump(phone_book.data, fh)
@@ -30,9 +30,10 @@ def say_hello(s=None):
 def say_goodbye(s=None):
     return "\nGood bye!\n"
 
+
+# Add new contact to address book
 @input_error
 def add_contact(value):
-    """ Add new contact to address book """
 
     name, *phones = value.lower().title().strip().split()
     name = Name(name.lower().title())
@@ -49,9 +50,9 @@ def add_contact(value):
         return f"\nContact {name.value.title()} already exists.\n"
 
 
+# The function displays all entries in the phone book with the 'show all' command.
 @input_error
 def show_all(s):
-    """ Функція виводить всі записи в телефонній книзі при команді 'show all' """
 
     if len(phone_book) == 0:
         return "\nPhone book is empty.\n"
@@ -61,9 +62,9 @@ def show_all(s):
     return result
 
 
+# Function for deleting a contact from the book.
 @input_error
 def remove_contact(name: str):
-    ''' Функція для видалення контакта з книги '''
 
     record = phone_book[name.strip().lower().title()]
     phone_book.del_record(record.name.value)
@@ -71,9 +72,9 @@ def remove_contact(name: str):
     return f"\nContact {name.title()} was removed.\n"
 
 
+# Function for adding a contact's phone.
 @input_error
 def add_phone(value):
-    ''' Функція для додавання телефону контакта'''
 
     name, phone = value.lower().strip().title().split()
 
@@ -85,9 +86,10 @@ def add_phone(value):
         return f"\nContact {name.title()} does not exist.\n"
 
 
+# Function to delete a contact's phone.
 @input_error
 def remove_phone(value):
-    ''' Функція для видалення телефону контакта '''
+
     name, phone = value.lower().title().strip().split()
 
     if name.title() in phone_book:
@@ -98,9 +100,9 @@ def remove_phone(value):
         return f"\nContact {name.title()} does not exist.\n"
 
 
+# Function for replacing the phone of a contact.
 @input_error
 def change_ph(value: str):
-    ''' Функція для заміни телефону контакта '''
 
     name, old_phone, new_phone = value.split()
 
@@ -112,9 +114,9 @@ def change_ph(value: str):
         return f"\nContact {name.title()} does not exists\n"
 
 
+# The function displays the phone number of the subscriber whose name was in the 'phone ...' command.
 @input_error
 def contact(name):
-    """ Функція відображає номер телефону абонента, ім'я якого було в команді 'phone ...'"""
 
     if name.title() in phone_book:
         record = phone_book[name.title()]
@@ -123,9 +125,9 @@ def contact(name):
         return f"\nContact {name.title()} does not exist.\n"
 
 
+# Function for adding an e-mail contact.
 @input_error
 def add_em(value):
-    ''' Функція для додавання e-mail контакта '''
 
     name, email = value.split()
     name = name.title()
@@ -137,9 +139,9 @@ def add_em(value):
         return f"\nContact {name.title()} does not exist.\n"
 
 
+# Function for deleting an e-mail contact.
 @input_error
 def remove_em(value):
-    ''' Функція для видалення e-mail контакта '''
 
     name, email = value.split()
     name = name.title()
@@ -152,9 +154,9 @@ def remove_em(value):
         return f"\nContact {name.title()} does not exist.\n"
 
 
+# Function for replacing e-mail contact.
 @input_error
 def change_em(value: str):
-    ''' Функція для заміни e-mail контакта '''
 
     name, old_em, new_em = value.split()
 
@@ -166,9 +168,9 @@ def change_em(value: str):
         return f"\nContact {name.title()} does not exists.\n"
 
 
+# Function for adding a contact address.
 @input_error
 def add_adrs(value):
-    ''' Функція для додавання адреси контакта '''
 
     name, address = value.split(" ", 1)
     name = name.title()
@@ -180,9 +182,9 @@ def add_adrs(value):
         return f"\nContact {name.title()} does not exist.\n"
 
 
+# Function for changing the address of a contact.
 @input_error
 def change_adrs(value):
-    ''' Функція для зміни адреси контакта '''
 
     name, address = value.split(" ", 1)
     name = name.title()
@@ -194,9 +196,9 @@ def change_adrs(value):
         return f"\nContact {name.title()} does not exists.\n"
 
 
+# Function to delete contact address.
 @input_error
 def remove_adrs(value):
-    ''' Функція для видалення адреси контакта '''
 
     name = value.lower().title().strip()
     if name.title() in phone_book:
@@ -207,9 +209,9 @@ def remove_adrs(value):
         return f"\nContact {name.title()} does not exist.\n"
 
 
+# A function to delete a contact's birthday.
 @input_error
 def remove_bd(value):
-    ''' Функція для видалення дня народження контакта контакта '''
 
     name = value.lower().title().strip()
 
@@ -221,9 +223,9 @@ def remove_bd(value):
         return f"\nContact {name.title()} does not exist.\n"
 
 
+# Function to add a contact's birthday to the book.
 @input_error
 def add_contact_birthday(value):
-    ''' Функція для додавання дня народження контакта к книгу '''
 
     name, birthday = value.lower().strip().split()
 
@@ -235,9 +237,9 @@ def add_contact_birthday(value):
         return f"\nContact {name.title()} does not exists.\n"
 
 
+# The function displays the number of days until the contact's birthday.
 @input_error
 def days_to_bd(name):
-    ''' Функція виводить кількість днів до дня народження контакта '''
 
     if name.title() in phone_book:
         if not phone_book[name.title()].birthday is None:
@@ -249,9 +251,9 @@ def days_to_bd(name):
         return f"\nContact {name.title()} does not exists.\n"
 
 
+# The function displays the list of birthday people for the period.
 @input_error
 def get_birthdays(value=None):
-    ''' Функція виводить перелік іменинників за період '''
 
     if value.strip() == '':
         period = 7
@@ -260,9 +262,9 @@ def get_birthdays(value=None):
     return phone_book.get_birthdays_per_range(period)
 
 
+# Function for changing the birthday of a contact.
 @input_error
 def change_bd(value):
-    ''' Функція для зміни дня народження контакта '''
 
     name, new_birthday = value.lower().strip().split()
     if name.title() in phone_book:
@@ -273,17 +275,16 @@ def change_bd(value):
     else:
         return f"\nContact {name.title()} does not exist.\n"
 
-
+# Search contact where there is 'text_to_search'.
 @input_error
 def search(text_to_search: str):
-    """ Search contact where there is 'text_to_search'  """
 
     return phone_book.search_contact(text_to_search)
 
 
 def helps(value):
     rules = """LIST OF COMMANDS: \n
-    1) to add new contact and one or more phones, write command: add contact <name> <phone> <phone> ... <phone>
+    1) to add new contact and one or more phones, write command: add contact <name>
     2) to remove contact, write command: remove contact <name>
     3) to add phone, write command: add phone <name> <one phone>
     4) to change phone, write command: change phone <name> <old phone> <new phone>
@@ -301,7 +302,7 @@ def helps(value):
     16) to see list of birthdays in period, write command: birthdays <number of days>
     17) to search contact, where is 'text', write command: search contact <text>
     18) to see full record of contact, write: phone <name>
-    19) to see all contacts, write command: show addressbook
+    19) to see all contacts, write command: show book
     20) to go to MENU, write command: menu . 
     21) to say hello, write command: hello
     22) to see help, write command: help
@@ -315,7 +316,7 @@ handlers = {
     "help": helps,
     "add contact": add_contact,
     "remove contact": remove_contact,
-    "show addressbook": show_all,
+    "show book": show_all,
     "add phone": add_phone,
     "remove phone": remove_phone,
     "change phone": change_ph,
@@ -326,7 +327,7 @@ handlers = {
     "add birthday": add_contact_birthday,
     "remove birthday": remove_bd,
     "change birthday": change_bd,
-    "days to birthday": days_to_bd,
+    "days to birthday": get_birthdays,
     "birthdays": get_birthdays,
     "change address": change_adrs,
     "remove address": remove_adrs,
@@ -335,7 +336,7 @@ handlers = {
 
 completer = NestedCompleter.from_nested_dict({
     "add": {
-        "contact": {"<name> <phone> <phone> ... <phone>"},
+        "contact": {"<name> "},
         "phone": {"<name> <one phone>"},
         "email": {"<name> <e-mail>"},
         "address": {"<name> <address>"},
@@ -354,16 +355,12 @@ completer = NestedCompleter.from_nested_dict({
         "birthday": {"<name> <d/m/yyyy>"},
         "address": {"<name> <new address>"},
     },
+    
     "phone": {"<name>"},
     "search": {
         "contacts": {"<text_to_seach>"},
     },
-    "good bye": None,
-    "close": None,
-    "exit": None,
-    "show": {
-        "notebook": None,
-    },
+
     "days to birthday": {"<name>"},
     "birthdays": {"<number of days>"},
     "hello": None,

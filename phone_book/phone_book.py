@@ -91,7 +91,7 @@ class Birthday(Field):
 
 class Contact:
 
-    def __init__(self, name, phones, emails=None, birthday=None, address=None, notations=None):
+    def __init__(self, name, phones, emails=None, birthday=None, address=None):
         self.name = name
         self.birthday = birthday
         self.address = address
@@ -102,9 +102,9 @@ class Contact:
 
         self.phones = phones
         
-        if notations is None:
-            notations = []
-        self.notations = notations
+        # if notations is None:
+        #     notations = []
+        # self.notations = notations
 
     
     # Phone
@@ -184,8 +184,8 @@ class Contact:
     def delete_address(self):
         self.address = None
      
-    def add_notations(self, notation):
-        self.notations.append(notation)
+    # def add_notations(self, notation):
+    #     self.notations.append(notation)
 
     def contacts(self):
         phon = []
@@ -201,11 +201,10 @@ class Contact:
                 em.append(str(i))
                 result_emails = ", ".join(em)
         return f"\nname: {str(self.name.value)};\n" \
-               f"phone: {result_phones};\n" \
-               f"e-mail: {result_emails};\n" \
-               f"birthday: {self.birthday};\n" \
-               f"address: {self.address};\n"\
-                f"notations: {self.notations};\n"\
+                f"phone: {result_phones};\n" \
+                f"e-mail: {result_emails};\n" \
+                f"birthday: {self.birthday};\n" \
+                f"address: {self.address};\n"\
             "********************"
     
     def __str__(self):
