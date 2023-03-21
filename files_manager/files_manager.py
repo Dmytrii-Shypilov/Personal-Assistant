@@ -2,10 +2,12 @@ import os
 import re
 import shutil
 
+
 from typing import Tuple
 from os.path import split
 from pathlib import Path
 from prettytable import PrettyTable
+from random import randint
 
 chat_in_progress = True
 
@@ -186,9 +188,26 @@ def sort_files(
                     + "\\"
                     + split(path_to_file)[-1]
                 ):
-                    shutil.move(
-                        path_to_file, path_folder_for_sort + "\\" + name_of_group + "\\"
+                    #  Проверка на наличие одноименного файла #
+                    document_name = str(path_to_file).split('\\').pop()
+                   
+                    if os.path.exists(path_folder_for_sort + '\\' + name_of_group + '\\' + document_name):
+                        # Создается рандомный префикс для переименования
+                        prefix = ''
+                        for i in range(1,4):
+                            symb = chr(randint(97, 122))
+                            if i == 1:
+                               symb = symb.upper()
+                            prefix+=symb
+
+                        shutil.move(
+                        path_to_file , path_folder_for_sort + "\\" + name_of_group + f"\\{prefix}_{document_name}"
                     )
+                        ####################################
+                    else:
+                        shutil.move(
+                            path_to_file, path_folder_for_sort + "\\" + name_of_group + "\\"
+                        )
 
 
 def unpack_archives(path_to_archives, groups_of_format):
