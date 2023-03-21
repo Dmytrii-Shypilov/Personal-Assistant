@@ -66,7 +66,7 @@ def remove_contact(name: str):
     ''' Функція для видалення контакта з книги '''
 
     record = phone_book[name.strip().lower().title()]
-    phone_book.del_record(record.name.value)
+    phone_book.del_contact(record.name.value)
     save_to_pickle()
     return f"\nContact {name.title()} was removed.\n"
 
