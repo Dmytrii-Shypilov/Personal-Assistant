@@ -1,3 +1,4 @@
+import os
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import NestedCompleter
 import pickle
@@ -8,18 +9,20 @@ import pickle
 from .phone_book import ContactBook, Name, Contact
 from .exception import input_error
 
+current_dir = os.path.abspath(os.path.dirname(__file__))
+file_path = os.path.join(current_dir, 'phone_data.bin')
 
-p = Path("phone_book/phone_book.bin")
+p = Path(file_path)
 phone_book = ContactBook()
 if p.exists():
-    with open("phone_book/phone_book.bin", "rb") as file:
+    with open(file_path, "rb") as file:
         phone_book.data = pickle.load(file)
 
 
 # Save address book in pickle file.
 def save_to_pickle():
 
-    with open("phone_book/phone_book.bin", "wb") as fh:
+    with open(file_path, "wb") as fh:
         pickle.dump(phone_book.data, fh)
 
 
