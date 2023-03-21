@@ -2,6 +2,7 @@ from collections import UserDict
 from datetime import datetime
 import pickle
 from pathlib import Path
+from prettytable import PrettyTable
 import re
 
 
@@ -200,13 +201,14 @@ class Contact:
             for i in self.emails:
                 em.append(str(i))
                 result_emails = ", ".join(em)
-        return f"\nname: {str(self.name.value)};\n" \
-               f"phone: {result_phones};\n" \
-               f"e-mail: {result_emails};\n" \
-               f"birthday: {self.birthday};\n" \
-               f"address: {self.address};\n"\
-                f"notations: {self.notations};\n"\
-            "********************"
+        table = PrettyTable([f"NAME:{str(self.name.value)}"])
+        table.add_row([f"phone: {result_phones}"])
+        table.add_row([f"e-mail: {result_emails};\n"])
+        table.add_row([f"birthday: {self.birthday};\n"])
+        table.add_row([f"address: {self.address};\n"])
+        table.min_table_width=40
+        table.align = 'l'
+        return table
     
     def __str__(self):
         return self.contacts()
