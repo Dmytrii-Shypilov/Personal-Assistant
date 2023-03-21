@@ -243,7 +243,7 @@ def main():
 
     if not os.path.exists(path_for_sort):
         print('Your path does not exist!')
-        return
+        return 
 
     # Create lists with names and paths to files and folders
     file_names, files_paths = parse_files(path_for_sort, IGNORE_LIST)
