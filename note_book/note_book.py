@@ -10,7 +10,7 @@ from prompt_toolkit.completion import WordCompleter
 
 ########## COMMANDS ################
 
-COMMANDS = ['add note', 'delete note', 'get by tag', 'get by title', 'get all', 'menu', 'edit note']
+COMMANDS = ['add note', 'delete note', 'get by tag', 'get by title', 'get all', 'menu', 'edit note', 'help']
 autocomplete_commands = WordCompleter(COMMANDS)
 
 
@@ -150,7 +150,7 @@ def get_instructions(message):
                 return (command, args)
             args = message.replace(command, '').strip()
             command_not_found = False
-            if command not in ["get all", "menu"] and args == "":
+            if command not in ["get all", "menu", "help"] and args == "":
                 raise ValueError("Please enter required arguments: title/tag")
             return (command, args)
     if command_not_found:
@@ -264,8 +264,21 @@ def terminate_assitant():
     global chat_in_progress 
     chat_in_progress = False
 
+def show_help():
+    print("""
+    COMMANDS:
+    1) add note: to add your new note
+    2) get all: to get all notes
+    3) get by title <title>: to get your note by title
+    4) get by tag <tag>: to get the list of notes sharing the same tag value
+    5) delete note <title>: to delete the note with a certain title
+    6) edit note <title>: to edit the text of a note with a certain title
+    7) menu: to go back to the main menu
+    """)
 
 def main():
+    global chat_in_progress
+    chat_in_progress = True
     while chat_in_progress:
         start_bot()
 
@@ -293,6 +306,8 @@ def start_bot():
             bot_message = edit_note(args)   
         case 'delete note':
             bot_message = delete_note(args)
+        case 'help':
+            show_help()
         case "menu":
             terminate_assitant()
 

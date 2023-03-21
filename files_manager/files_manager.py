@@ -213,7 +213,7 @@ def unpack_archives(path_to_archives, groups_of_format):
             shutil.unpack_archive(archive, path_for_unpack, archive.name.split(".")[-1])
 
 
-def main():
+def start_sorter():
     global chat_in_progress
     # ignore list with names of folders to be ignored
     IGNORE_LIST = ["images", "videos", "documents", "audios", "archives"]
@@ -285,9 +285,11 @@ def main():
 
     print(output_table)
 
-def start_sorter():
+def main():
+    global chat_in_progress
+    chat_in_progress = True
     while chat_in_progress:
-        main()
+        start_sorter()
 
 if __name__ == "__main__":
-    start_sorter()
+    main()
