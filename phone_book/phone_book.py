@@ -92,7 +92,7 @@ class Birthday(Field):
 
 class Contact:
 
-    def __init__(self, name, phones, emails=None, birthday=None, address=None, notations=None):
+    def __init__(self, name, phones, emails=None, birthday=None, address=None):
         self.name = name
         self.birthday = birthday
         self.address = address
@@ -103,9 +103,9 @@ class Contact:
 
         self.phones = phones
         
-        if notations is None:
-            notations = []
-        self.notations = notations
+        # if notations is None:
+        #     notations = []
+        # self.notations = notations
 
     
     # Phone
@@ -185,8 +185,8 @@ class Contact:
     def delete_address(self):
         self.address = None
      
-    def add_notations(self, notation):
-        self.notations.append(notation)
+    # def add_notations(self, notation):
+    #     self.notations.append(notation)
 
     def contacts(self):
         phon = []
@@ -201,6 +201,7 @@ class Contact:
             for i in self.emails:
                 em.append(str(i))
                 result_emails = ", ".join(em)
+
         table = PrettyTable([f"NAME:{str(self.name.value)}"])
         table.add_row([f"phone: {result_phones}"])
         table.add_row([f"e-mail: {result_emails};\n"])
@@ -209,6 +210,8 @@ class Contact:
         table.min_table_width=40
         table.align = 'l'
         return table
+
+
     
     def __str__(self):
         return self.contacts()
