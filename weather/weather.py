@@ -77,7 +77,7 @@ def weather(city = 'Kyiv'):
         min_temp = "Min. temperature: " + temp[2].text + " °C"
         next_days.append([day_name, weather, max_temp, min_temp])
     
-    next_days_split = [next_days[0:4], next_days[4:len(next_days)-1]]
+    next_days_split = [next_days[1:4], next_days[4:len(next_days)-1]]
 
     format_weather(data, next_days_split)
 
