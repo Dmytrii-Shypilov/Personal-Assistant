@@ -202,14 +202,12 @@ class Contact:
                 em.append(str(i))
                 result_emails = ", ".join(em)
 
-        table = PrettyTable([f"NAME:{str(self.name.value)}"])
-        table.add_row([f"phone: {result_phones}"])
-        table.add_row([f"e-mail: {result_emails};\n"])
-        table.add_row([f"birthday: {self.birthday};\n"])
-        table.add_row([f"address: {self.address};\n"])
-        table.min_table_width=40
-        table.align = 'l'
-        return table
+        return f"\nname: {str(self.name.value)};\n" \
+               f"phone: {result_phones};\n" \
+               f"e-mail: {result_emails};\n" \
+               f"birthday: {self.birthday};\n" \
+               f"address: {self.address};\n"\
+            "********************"
 
 
     
@@ -219,9 +217,16 @@ class Contact:
     def __repr__(self):
         return self.contacts()
 
+
 class ContactBook(UserDict):
     def add_contact(self, contact):
         self.data[contact.name.value] = contact
+
+    def get_contact(self, name):
+        found = list(filter(lambda x: x[0].lower() == name.lower() , self.data.items()))  
+        if not len(found):
+            return f"No contact with name '{name}' exists"
+        return found[0][1]
 
     def show_book(self):
         result = ""

@@ -50,6 +50,11 @@ def add_contact(value):
         return f"\nContact {name.value.title()} already exists.\n"
 
 
+@input_error
+def find_contact(name):
+    contact = phone_book.get_contact(name)
+    return contact
+
 # The function displays all entries in the phone book with the 'show all' command.
 @input_error
 def show_all(s):
@@ -300,7 +305,7 @@ def helps(value):
     14) to change birthday, write command: change birthday <name> <d/m/yyyy>
     15) to see how many days to contact's birthday, write command: days to birthday <name>
     16) to see list of birthdays in period, write command: birthdays <number of days>
-    17) to search contact, where is 'text', write command: search contact <text>
+    17) to search contact, by name, write command: search contact <name>
     18) to see full record of contact, write: phone <name>
     19) to see all contacts, write command: show book
     20) to go to MENU, write command: menu . 
@@ -314,6 +319,7 @@ handlers = {
     "hello": say_hello,
     "menu": say_goodbye,
     "help": helps,
+    "search contact": find_contact,
     "add contact": add_contact,
     "remove contact": remove_contact,
     "show book": show_all,
@@ -358,33 +364,37 @@ completer = NestedCompleter.from_nested_dict({
     
     "phone": {"<name>"},
     "search": {
-        "contacts": {"<text_to_seach>"},
+        "contact": {"<name>"},
     },
 
     "days to birthday": {"<name>"},
     "birthdays": {"<number of days>"},
     "hello": None,
     "help": None,
+    "menu": None
 })
 
 
 def main():
     
     while True:
-        
+      
         command = prompt('(ADDRESS BOOK) Enter command >>> ', completer=completer)
 
         command = command.strip().lower()
-        if command not in handlers.keys():
-            print("\nEnter a valid command. Type 'help' for additional info")
+        
         if command in ("menu"):
             say_goodbye()
             break
         else:
+            match = False
             for key in handlers:
                 if key in command:
+                    match = True
                     print(handlers[key](command[len(key):].strip()))
                     break
+            if not match:
+                    print("\nEnter a valid command. Type 'help' for additional info\n")
 
 
 if __name__ == "__main__":
