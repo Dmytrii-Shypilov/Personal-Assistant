@@ -36,8 +36,8 @@ To terminate the program type **exit**
 
 **NOTE BOOK**
 <p>
-- [x]to add your new note: add note
-- [x] to get all notes: get all
+- [x] to add your new note: add note
+- [x] __to get all notes__: get all
 - [x] to get your note by title:  get by title <title>
 - [x] to get the list of notes sharing the same tag value: get by tag <tag>
 - [x] to delete the note with a certain title: delete note <title>
