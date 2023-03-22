@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='personal-assistant',
+    name='assistant_bot',
     version='1.0.0',
     description='Helps to organize and plan your daily routine',
     url='https://github.com/Dmytrii-Shypilov/Personal-Assistant',
