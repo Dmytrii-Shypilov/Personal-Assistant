@@ -43,7 +43,7 @@ To terminate the program type **exit**
 - [x] to delete the note with a certain title: delete note <title>
 - [x] to edit the text of a note with a certain title: edit note <title>
 - [x] to go back to the main menu:  menu
-</p>
+<p>
 
 **ADDRESS BOOKK**
 <p>
