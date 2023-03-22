@@ -1,9 +1,9 @@
-from .files_manager.files_manager import main as sorting_manager
-from .note_book.note_book import Note, NoteBook, main as notes_manager
-from .phone_book.phone_book import Contact, Email, Birthday, Phone, Address
-from .phone_book.phone_bot import main as phone_book_manager
+from .files_manager import main as sorting_manager
+from .note_book import Note, NoteBook, main as notes_manager
+from .phone_book import Contact, Email, Birthday, Phone, Address
+from .phone_bot import main as phone_book_manager
 from prettytable import PrettyTable
-from .weather.weather import main as weather_manager
+from .weather import main as weather_manager
 
 
 logo = """ 

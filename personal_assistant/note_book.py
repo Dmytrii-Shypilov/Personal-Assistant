@@ -1,10 +1,8 @@
-import os
-import pathlib
 import pickle
-import re
 
 
 from collections import UserDict
+from pathlib import Path
 from prettytable import PrettyTable
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import WordCompleter
@@ -18,7 +16,6 @@ autocomplete_commands = WordCompleter(COMMANDS)
 ########## CLASSES ##################
 
 class NoteBook(UserDict):
-    current_dir = os.path.abspath(os.path.dirname(__file__))
 
     def add_note(self, note):
         self.data.update({note.title: note})
@@ -41,20 +38,20 @@ class NoteBook(UserDict):
         return notes_list
 
     def save_data_to_file(self):
-        file_path = os.path.join(self.current_dir, 'notes_data.bin')
-        with open(file_path, 'wb') as file:
+        with open('notes_data.bin', 'wb') as file:
             pickle.dump(self.data, file)
 
     def retrieve_data_from_file(self):
-            file_path = os.path.join(self.current_dir, 'notes_data.bin')
-            with open(file_path, 'rb') as file:
-                is_file_empty = not bool(file.read()) 
-                if is_file_empty:
-                    return
-                else:
-                    file.seek(0)
-                    deserialized = pickle.load(file)
-                    self.data = deserialized 
+            path = Path('notes_data.bin')
+            if path.exists():
+                with open('notes_data.bin', 'rb') as file:
+                    is_file_empty = not bool(file.read()) 
+                    if is_file_empty:
+                        return
+                    else:
+                        file.seek(0)
+                        deserialized = pickle.load(file)
+                        self.data = deserialized 
 
 
 class Note:

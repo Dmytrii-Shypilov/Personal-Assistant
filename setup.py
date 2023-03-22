@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='personal_assistant',
+    name='personal-assistant',
     version='1.0.0',
     description='Helps to organize and plan your daily routine',
     url='https://github.com/Dmytrii-Shypilov/Personal-Assistant',
@@ -9,10 +9,10 @@ setup(
     author_email='dmytriishypilov@gmail.com',
     license='MIT',
     include_package_data=True,
-    data_files = [('personal_assistant', ['personal_assistant/note_book/notes_data.bin', 'personal_assistant/phone_book/phone_data.bin'])],
     packages=find_packages(),
     install_requires=['autopep8',  'beautifulsoup4', 'bs4', 'certifi', 'charset-normalizer', 'idna', 'prettytable', 'prompt-toolkit', 'pycodestyle',  'requests',
                       'soupsieve', 'urllib3', 'wcwidth'
                       ],
-    entry_points={'console_scripts': ['call-assistant=personal_assistant.menu:main']}
+    entry_points={'console_scripts': [
+        'call-assistant=personal_assistant.menu:main']}
 )
