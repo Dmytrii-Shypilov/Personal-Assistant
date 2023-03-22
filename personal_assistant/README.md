@@ -98,4 +98,3 @@ Dmytrii Shypilov (Team Lead) </p>
 <p>Kostiantyn Liapkalo (Developer) </p>
 <p>Artur Mistiuk (Developer)</p>
 
-
