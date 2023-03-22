@@ -36,13 +36,13 @@ To terminate the program type **exit**
 
 **NOTE BOOK**
 
-- [x] to add your new note: add note
-- [x] __to get all notes__: get all
-- [x] to get your note by title:  get by title <title>
-- [x] to get the list of notes sharing the same tag value: get by tag <tag>
-- [x] to delete the note with a certain title: delete note <title>
-- [x] to edit the text of a note with a certain title: edit note <title>
-- [x] to go back to the main menu:  menu
+- [x] to add your new note: __add note__
+- [x] to get all notes: __get all__
+- [x] to get your note by title:  __get by title <title>__
+- [x] to get the list of notes sharing the same tag value: __get by tag <tag>__
+- [x] to delete the note with a certain title: __delete note <title>__
+- [x] to edit the text of a note with a certain title: __edit note <title>__
+- [x] to go back to the main menu:  __menu__
 
 
 **ADDRESS BOOKK**
