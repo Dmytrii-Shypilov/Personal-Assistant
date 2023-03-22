@@ -1,25 +1,26 @@
+import os
 from prompt_toolkit import prompt
 from prompt_toolkit.completion import NestedCompleter
+from prettytable import PrettyTable
 import pickle
 from pathlib import Path
 from collections import UserDict
 from datetime import datetime
 import pickle
-from phone_book.phone_book import ContactBook, Name, Contact
-from phone_book.exception import input_error
+from .phone_book import ContactBook, Name, Contact
+from .exception import input_error
 
-
-p = Path("phone_book/phone_book.bin")
+p = Path("phone_data.bin")
 phone_book = ContactBook()
 if p.exists():
-    with open("phone_book/phone_book.bin", "rb") as file:
+    with open("phone_data.bin", "rb") as file:
         phone_book.data = pickle.load(file)
 
 
-# Save address book in pickle file.
 def save_to_pickle():
+    """ Save address book in pickle file"""
 
-    with open("phone_book/phone_book.bin", "wb") as fh:
+    with open("phone_data.bin", "wb") as fh:
         pickle.dump(phone_book.data, fh)
 
 
@@ -63,7 +64,7 @@ def show_all(s):
         return "\nPhone book is empty.\n"
     result = ''
     for record in phone_book.values():
-        result += f"{record.contacts()}\n"
+       result += f"{record.contacts()}\n"
     return result
 
 
@@ -371,7 +372,8 @@ completer = NestedCompleter.from_nested_dict({
     "birthdays": {"<number of days>"},
     "hello": None,
     "help": None,
-    "menu": None
+    "menu": None,
+    "show book": None
 })
 
 

@@ -202,12 +202,12 @@ class Contact:
                 em.append(str(i))
                 result_emails = ", ".join(em)
 
-        return f"\nname: {str(self.name.value)};\n" \
-               f"phone: {result_phones};\n" \
-               f"e-mail: {result_emails};\n" \
-               f"birthday: {self.birthday};\n" \
-               f"address: {self.address};\n"\
-            "********************"
+        return f"\n\tname: {str(self.name.value)};\n" \
+               f"\tphone: {result_phones};\n" \
+               f"\te-mail: {result_emails};\n" \
+               f"\tbirthday: {self.birthday};\n" \
+               f"\taddress: {self.address};\n"\
+            "\t********************"
 
 
     
