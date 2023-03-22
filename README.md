@@ -36,17 +36,16 @@ To terminate the program type **exit**
 
 **NOTE BOOK**
 
-- [x] to add your new note: **add note
-- [x] to get all notes: **get all
-- [x] to get your note by title:  **get by title <title>
-- [x] to get the list of notes sharing the same tag value: **get by tag <tag>
-- [x] to delete the note with a certain title: __delete note <title>__
-- [x] to edit the text of a note with a certain title: __edit note <title>__
+- [x] to add your new note: add note
+- [x] to get all notes: get all
+- [x] to get your note by title:  get by title <title>
+- [x] to get the list of notes sharing the same tag value: get by tag <tag>
+- [x] to delete the note with a certain title: delete note <title>
+- [x] to edit the text of a note with a certain title: edit note <title>
 - [x] to go back to the main menu:  menu
 
 
-**ADDRESS BOOKK**
-<p>
+**ADDRESS BOOK**
 - [x] to add new contact and one or more phones, write command: add contact <name>
 - [x] to remove contact, write command: remove contact <name>
 - [x] to add phone, write command: add phone <name> <one phone>
@@ -69,10 +68,9 @@ To terminate the program type **exit**
 - [x] to go to MENU, write command: menu 
 - [x] to say hello, write command: hello
 - [x] to see help, write command: help
-</p>
+
 
 **FOLDER SORTER**
-<p>
 - [x] to sort a folder you should enter a path to it.
 - [x] to go to MENU, write command: menu
 - [x] supported formats for sorting:
@@ -86,14 +84,12 @@ groups_of_format = {
         "archives": ["ZIP", "GZ", "TAR", "RAR"],
     }
 ```
-</p>
 
 **WEATHER**
-<p>
 By default weather forecast is set for Kyiv
 - [x] to get the weather forecast type your city name
 - [x] to go to MENU, write command: menu
-</p>
+
 ___
 
 ### PySoft team:
