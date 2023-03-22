@@ -35,7 +35,7 @@ In the beginning, you enter the main **MENU** interface where you will be asked 
 To terminate the program type **exit**
 
 **NOTE BOOK**
-<p>
+
 - [x] to add your new note: add note
 - [x] __to get all notes__: get all
 - [x] to get your note by title:  get by title <title>
@@ -43,7 +43,7 @@ To terminate the program type **exit**
 - [x] to delete the note with a certain title: delete note <title>
 - [x] to edit the text of a note with a certain title: edit note <title>
 - [x] to go back to the main menu:  menu
-<p>
+
 
 **ADDRESS BOOKK**
 <p>
