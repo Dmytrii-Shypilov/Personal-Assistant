@@ -3,7 +3,7 @@
 The project was elaborated with the purpose to improve personal planning routines in order to effectively manage all daily tasks.
 It is exclusively based on the command line interface.
 
-The following libraries were used: **autopep8,  beautifulsoup4, bs4, certifi, charset-normalizer, idna, prettytable, prompt-toolkit, pycodestyle,  requests soupsieve, urllib3, wcwidth**.
+The following tools were used: **autopep8,  beautifulsoup4, bs4, certifi, charset-normalizer, idna, prettytable, prompt-toolkit, pycodestyle,  requests soupsieve, urllib3, wcwidth**.
 
 
 ### Installation
