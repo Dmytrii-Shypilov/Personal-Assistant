@@ -86,7 +86,7 @@ groups_of_format = {
 ```
 
 **WEATHER**
-By default weather forecast is set for Kyiv
+- [x] by default weather forecast is set for Kyiv
 - [x] to get the weather forecast type your city name
 - [x] to go to MENU, write command: menu
 
