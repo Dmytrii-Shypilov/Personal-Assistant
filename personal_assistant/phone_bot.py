@@ -7,8 +7,8 @@ from pathlib import Path
 from collections import UserDict
 from datetime import datetime
 import pickle
-from .phone_book import ContactBook, Name, Contact
-from .exception import input_error
+from phone_book import ContactBook, Name, Contact
+from exception import input_error
 
 p = Path("phone_data.bin")
 phone_book = ContactBook()

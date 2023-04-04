@@ -2,7 +2,6 @@ import requests
 from prompt_toolkit.completion import WordCompleter
 from prompt_toolkit import PromptSession
 from prompt_toolkit.validation import Validator
-from prompt_toolkit.styles import Style
 from prettytable import PrettyTable
 from prettytable import SINGLE_BORDER 
 from bs4 import BeautifulSoup
@@ -33,12 +32,6 @@ cities_completer = WordCompleter(["Kabul", "Tirana", "Algiers", "Andorra la Vell
                                   "Funafuti", "Kampala", "Kyiv", "Abu Dhabi", "London", "Washington D.C.", "Montevideo", "Tashkent", "Port Vila", 
                                   "Vatican City", "Caracas", "Hanoi", "Cardiff", "Sana'a", "Lusaka", "Harare", "Dubai", "menu"], ignore_case=True)
 
-# style = Style.from_dict({
-#     'completion-menu.completion': 'bg:#0d2fc9 #ffffff',
-#     'completion-menu.completion.current': 'bg:#f6fa0c #000000',
-#     'scrollbar.background': 'bg:#88aaaa',
-#     'scrollbar.button': 'bg:#222222',
-# })
 
 def weather(city = 'Kyiv'):
     city = city + "+weather"
@@ -63,7 +56,6 @@ def weather(city = 'Kyiv'):
     data = [city, time, temp, info, humidity, wind]
 
     next_days =[]
-  
     days = soup.find("div", attrs={"id": "wob_dp"})
     for day in days.findAll("div", attrs={"class": "wob_df"}):
         # extract the name of the day
@@ -76,7 +68,6 @@ def weather(city = 'Kyiv'):
         # minimum temparature
         min_temp = "Min. temperature: " + temp[2].text + " °C"
         next_days.append([day_name, weather, max_temp, min_temp])
-    
     next_days_split = [next_days[1:4], next_days[4:len(next_days)-1]]
 
     format_weather(data, next_days_split)
@@ -95,13 +86,10 @@ def format_weather(data: list, next_days_split = None ):
     my_weather_table = PrettyTable()
     my_weather_table.add_column(data[1], data[2:])
     my_weather_table.set_style(SINGLE_BORDER)
-    # my_weather_table.max_width = 200
     my_weather_table.align = 'c'
     print(my_weather_table)
-
     first_table = create_table(next_days_split[0])
     second_table = create_table(next_days_split[1])
-
     print(f"{first_table}\n{second_table}")
     print("\nReturn to main menu type 'menu'\n")
 
@@ -116,9 +104,6 @@ validator = Validator.from_callable(is_text,
 
 def main():
     session = PromptSession(completer=cities_completer)
-    # with styling dropdown list
-    # session = PromptSession(completer=cities_completer, style=style) 
-
     weather() # default Kyiv
     while True:
         try:
@@ -134,7 +119,6 @@ def main():
                 break
             else:
                 weather(city)
-    # print('GoodBye!')
 
 if __name__ == '__main__':
     main()

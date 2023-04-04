@@ -1,9 +1,9 @@
-from .files_manager import main as sorting_manager
-from .note_book import Note, NoteBook, main as notes_manager
-from .phone_book import Contact, Email, Birthday, Phone, Address
-from .phone_bot import main as phone_book_manager
+from files_manager import main as sorting_manager
+from note_book import Note, NoteBook, main as notes_manager
+from phone_book import Contact, Email, Birthday, Phone, Address
+from phone_bot import main as phone_book_manager
 from prettytable import PrettyTable
-from .weather import main as weather_manager
+from weather import main as weather_manager
 
 
 logo = """ 
@@ -22,6 +22,21 @@ MENU_ITEMS = ["NOTE BOOK", "ADDRESS BOOK", "FOLDER SORTER", "WEATHER"]
 COMMANNDS = ['1', '2', '3', '4', 'exit']
 
 chat_in_progress = True
+
+
+from abc import ABC, abstractmethod
+
+
+class Commands(ABC):
+
+    @abstractmethod
+    def generate_command(self, data):
+        pass
+
+class MyCommand(Commands):
+
+    def generate_command(self, command):
+        return command
 
 def check_command_validity(func):
     def inner():
@@ -58,16 +73,23 @@ def start_assistant():
     if message not in COMMANNDS:
         message = "This is invalid command.\n"
         raise ValueError(message)
-
+    notes = MyCommand()
+    book = MyCommand()
+    sort_files = MyCommand()
+    # note = notes.generate_command(notes_manager())
+    weather = MyCommand()
+    # w = weather.generate_command(weather_manager())
     match message:
         case "1":
-            notes_manager()
+            notes.generate_command(notes_manager())
+            # notes_manager()
         case "2":
-            phone_book_manager()
+            book.generate_command(phone_book_manager())
         case '3':
-            sorting_manager()
+            sort_files.generate_command(sorting_manager())
         case "4":
-            weather_manager()
+            weather.generate_command(weather_manager())
+            # weather_manager()
         case "exit":
             terminate_program()
 

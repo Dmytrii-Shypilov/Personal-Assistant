@@ -1,0 +1,63 @@
+@startuml classes
+set namespaceSeparator none
+class "_collections_abc.Collection" as _collections_abc.Collection {
+}
+class "_collections_abc.Container" as _collections_abc.Container {
+}
+class "_collections_abc.Iterable" as _collections_abc.Iterable {
+}
+class "_collections_abc.Mapping" as _collections_abc.Mapping {
+  get(key, default)
+  items()
+  keys()
+  values()
+}
+class "_collections_abc.MutableMapping" as _collections_abc.MutableMapping {
+  clear()
+  pop(key, default)
+  popitem()
+  setdefault(key, default)
+  update()
+}
+class "_collections_abc.Sized" as _collections_abc.Sized {
+}
+class "collections.UserDict" as collections.UserDict {
+  data : dict
+  copy()
+  fromkeys(iterable, value)
+}
+class "personal_assistant.note_book.Content" as personal_assistant.note_book.Content {
+  value
+}
+class "personal_assistant.note_book.Note" as personal_assistant.note_book.Note {
+  tag
+  tag
+  text
+  text
+  title
+  title
+}
+class "personal_assistant.note_book.NoteBook" as personal_assistant.note_book.NoteBook {
+  data
+  add_note(note)
+  delete_note(title)
+  get_all()
+  get_note(title)
+  get_notes_by_tag(tag)
+  retrieve_data_from_file()
+  save_data_to_file()
+}
+class "personal_assistant.note_book.Tag" as personal_assistant.note_book.Tag {
+  value
+}
+class "personal_assistant.note_book.Title" as personal_assistant.note_book.Title {
+  value
+}
+_collections_abc.Collection --|> _collections_abc.Container
+_collections_abc.Collection --|> _collections_abc.Iterable
+_collections_abc.Collection --|> _collections_abc.Sized
+_collections_abc.Mapping --|> _collections_abc.Collection
+_collections_abc.MutableMapping --|> _collections_abc.Mapping
+collections.UserDict --|> _collections_abc.MutableMapping
+personal_assistant.note_book.NoteBook --|> collections.UserDict
+@enduml
