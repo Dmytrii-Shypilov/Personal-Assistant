@@ -10,7 +10,7 @@ setup(
     license='MIT',
     include_package_data=True,
     packages=find_packages(),
-    install_requires=['bs4', 'certifi', 'prettytable', 'prompt-toolkit', 'requests' ],
+    install_requires=['bs4', 'prettytable', 'prompt-toolkit', 'requests' ],
     entry_points={'console_scripts': [
         'call-assistant=personal_assistant.menu:main']}
 )
