@@ -10,9 +10,7 @@ setup(
     license='MIT',
     include_package_data=True,
     packages=find_packages(),
-    install_requires=['autopep8',  'beautifulsoup4', 'bs4', 'certifi', 'charset-normalizer', 'idna', 'prettytable', 'prompt-toolkit', 'pycodestyle',  'requests',
-                      'soupsieve', 'urllib3', 'wcwidth'
-                      ],
+    install_requires=['bs4', 'certifi', 'prettytable', 'prompt-toolkit', 'requests' ],
     entry_points={'console_scripts': [
         'call-assistant=personal_assistant.menu:main']}
 )
